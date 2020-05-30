@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -23,8 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -33,10 +34,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -70,9 +73,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -86,13 +87,18 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -108,7 +114,6 @@ body {
   padding-top: 65px;
   margin-top: -65px;
 }
-
 .section h2 {
   padding-top: 65px;
   margin-top: -65px;
@@ -128,6 +133,43 @@ body {
 .section h6 {
   padding-top: 65px;
   margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -149,47 +191,65 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
-
-
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <style type="text/css">
 
@@ -238,8 +298,6 @@ div.tocify {
 
 .tocify-subheader .tocify-item {
   font-size: 0.90em;
-  padding-left: 25px;
-  text-indent: 0;
 }
 
 .tocify .list-group-item {
@@ -248,6 +306,16 @@ div.tocify {
 
 
 </style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
 
 <!-- setup 3col/9col grid for toc_float and main content  -->
 <div class="row-fluid">
@@ -301,25 +369,29 @@ div.tocify {
 </div>
 
 
+<pre class="r"><code>search()
+#&gt;  [1] &quot;.GlobalEnv&quot;        &quot;package:stats&quot;     &quot;package:graphics&quot; 
+#&gt;  [4] &quot;package:grDevices&quot; &quot;package:utils&quot;     &quot;package:datasets&quot; 
+#&gt;  [7] &quot;package:methods&quot;   &quot;Autoloads&quot;         &quot;tools:callr&quot;      
+#&gt; [10] &quot;package:base&quot;</code></pre>
 <div id="load-packages" class="section level2">
 <h2>Load packages</h2>
-<p>Load purrr and repurrrsive, which contains recursive list examples. listviewer provides the interactive list viewing widgets.</p>
+<p>Load purrr and repurrrsive, which contains recursive list examples.</p>
 <pre class="r"><code>library(purrr)
-library(repurrrsive)
-library(listviewer)</code></pre>
+library(repurrrsive)</code></pre>
 </div>
 <div id="vectorized-and-list-ized-operations" class="section level2">
 <h2>Vectorized and “list-ized” operations</h2>
-<p>This lesson picks up where <a href="https://jennybc.github.io/purrr-tutorial/bk00_vectors-and-lists.html#vectorized_operations">the primer on vectors and lists</a> left off. Recall that many operations “just work” in a vectorized fashion in R:</p>
+<p>This lesson picks up where <a href="bk00_vectors-and-lists.html#vectorized_operations">the primer on vectors and lists</a> left off. Recall that many operations “just work” in a vectorized fashion in R:</p>
 <pre class="r"><code>(3:5) ^ 2
 #&gt; [1]  9 16 25
 sqrt(c(9, 16, 25))
 #&gt; [1] 3 4 5</code></pre>
 <p>Through the magic of R, the operations “raise to the power of 2” and “take the square root” were applied to each individual element of the numeric vector input. Someone – but not you! – has written a <code>for()</code> loop:</p>
-<pre><code>for (i in 1:n) {
+<pre class="r"><code>for (i in 1:n) {
   output[[i]] &lt;- f(input[[i]])
 }</code></pre>
-<p>Automatic vectorization is possible because our input is an atomic vector: always of length one, always of uniform type.</p>
+<p>Automatic vectorization is possible because our input is an atomic vector: the individual atoms are always of length one, always of uniform type.</p>
 <p>What if the input is a list? You have to be more intentional to apply a function <code>f()</code> to each element of a list, i.e. to “list-ize” computation. This makes sense because the data structure itself does not guarantee that it makes any sense at all to apply a common function <code>f()</code> to each element of the list. You must guarantee that.</p>
 <p><code>purrr::map()</code> is a function for applying a function to each element of a list. The <a href="bk01_base-functions.html">closest base R function</a> is <code>lapply()</code>. Here’s how the square root example of the above would look if the input was in a list.</p>
 <pre class="r"><code>map(c(9, 16, 25), sqrt)
@@ -338,6 +410,7 @@ sqrt(c(9, 16, 25))
 <li>Shortcuts for <code>YOUR_FUNCTION</code> when you want to extract list elements by name or position</li>
 <li>Simplify and specify the type of output via <code>map_chr()</code>, <code>map_lgl()</code>, etc.</li>
 </ul>
+<p>This is where you begin to see the differences between <code>purrr::map()</code> and <code>base::lapply()</code>.</p>
 <div id="name-and-position-shortcuts" class="section level3">
 <h3>Name and position shortcuts</h3>
 <p>Who are these Game of Thrones characters?</p>
@@ -452,6 +525,11 @@ str(x[16:17])
 #&gt;   ..$ born   : chr &quot;In 280 AC&quot;</code></pre>
 <p>Some people find this ugly and might prefer the <code>extract()</code> function from magrittr.</p>
 <pre class="r"><code>library(magrittr)
+#&gt; 
+#&gt; Attaching package: &#39;magrittr&#39;
+#&gt; The following object is masked from &#39;package:purrr&#39;:
+#&gt; 
+#&gt;     set_names
 x &lt;- map(got_chars, extract, c(&quot;name&quot;, &quot;culture&quot;, &quot;gender&quot;, &quot;born&quot;))
 str(x[18:19])
 #&gt; List of 2
@@ -476,22 +554,22 @@ str(x[18:19])
 <h3>Data frame output</h3>
 <p>We just learned how to extract multiple elements per user by mapping <code>[</code>. But, since <code>[</code> is non-simplifying, each user’s elements are returned in a list. And, as it must, <code>map()</code> itself returns list. We’ve traded one recursive list for another recursive list, albeit a slightly less complicated one.</p>
 <p>How can we “stack up” these results row-wise, i.e. one row per user and variables for “name”, “gender”, etc.? A data frame would be the perfect data structure for this information.</p>
-<p>This is what <code>map_df()</code> is for.</p>
-<pre class="r"><code>map_df(got_chars, extract, c(&quot;name&quot;, &quot;culture&quot;, &quot;gender&quot;, &quot;id&quot;, &quot;born&quot;, &quot;alive&quot;))
+<p>This is what <code>map_dfr()</code> is for.</p>
+<pre class="r"><code>map_dfr(got_chars, extract, c(&quot;name&quot;, &quot;culture&quot;, &quot;gender&quot;, &quot;id&quot;, &quot;born&quot;, &quot;alive&quot;))
 #&gt; # A tibble: 30 x 6
-#&gt;                  name  culture gender    id
-#&gt;                 &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
-#&gt;  1      Theon Greyjoy Ironborn   Male  1022
-#&gt;  2   Tyrion Lannister            Male  1052
-#&gt;  3  Victarion Greyjoy Ironborn   Male  1074
-#&gt;  4               Will            Male  1109
-#&gt;  5         Areo Hotah Norvoshi   Male  1166
-#&gt;  6              Chett            Male  1267
-#&gt;  7            Cressen            Male  1295
-#&gt;  8    Arianne Martell  Dornish Female   130
-#&gt;  9 Daenerys Targaryen Valyrian Female  1303
-#&gt; 10     Davos Seaworth Westeros   Male  1319
-#&gt; # ... with 20 more rows, and 2 more variables: born &lt;chr&gt;, alive &lt;lgl&gt;</code></pre>
+#&gt;    name            culture  gender    id born                         alive
+#&gt;    &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;                        &lt;lgl&gt;
+#&gt;  1 Theon Greyjoy   Ironborn Male    1022 In 278 AC or 279 AC, at Pyke TRUE 
+#&gt;  2 Tyrion Lannist… &quot;&quot;       Male    1052 In 273 AC, at Casterly Rock  TRUE 
+#&gt;  3 Victarion Grey… Ironborn Male    1074 In 268 AC or before, at Pyke TRUE 
+#&gt;  4 Will            &quot;&quot;       Male    1109 &quot;&quot;                           FALSE
+#&gt;  5 Areo Hotah      Norvoshi Male    1166 In 257 AC or before, at Nor… TRUE 
+#&gt;  6 Chett           &quot;&quot;       Male    1267 At Hag&#39;s Mire                FALSE
+#&gt;  7 Cressen         &quot;&quot;       Male    1295 In 219 AC or 220 AC          FALSE
+#&gt;  8 Arianne Martell Dornish  Female   130 In 276 AC, at Sunspear       TRUE 
+#&gt;  9 Daenerys Targa… Valyrian Female  1303 In 284 AC, at Dragonstone    TRUE 
+#&gt; 10 Davos Seaworth  Westeros Male    1319 In 260 AC or before, at Kin… TRUE 
+#&gt; # … with 20 more rows</code></pre>
 <p>Finally! A data frame! Hallelujah!</p>
 <p>Notice how the variables have been automatically type converted. It’s a beautiful thing. Until it’s not. When programming, it is safer, but more cumbersome, to explicitly specify type and build your data frame the usual way.</p>
 <pre class="r"><code>library(tibble)
@@ -506,30 +584,30 @@ got_chars %&gt;% {
   )
 }
 #&gt; # A tibble: 30 x 6
-#&gt;                  name  culture gender    id
-#&gt;                 &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;int&gt;
-#&gt;  1      Theon Greyjoy Ironborn   Male  1022
-#&gt;  2   Tyrion Lannister            Male  1052
-#&gt;  3  Victarion Greyjoy Ironborn   Male  1074
-#&gt;  4               Will            Male  1109
-#&gt;  5         Areo Hotah Norvoshi   Male  1166
-#&gt;  6              Chett            Male  1267
-#&gt;  7            Cressen            Male  1295
-#&gt;  8    Arianne Martell  Dornish Female   130
-#&gt;  9 Daenerys Targaryen Valyrian Female  1303
-#&gt; 10     Davos Seaworth Westeros   Male  1319
-#&gt; # ... with 20 more rows, and 2 more variables: born &lt;chr&gt;, alive &lt;lgl&gt;</code></pre>
+#&gt;    name            culture  gender    id born                         alive
+#&gt;    &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt;  &lt;int&gt; &lt;chr&gt;                        &lt;lgl&gt;
+#&gt;  1 Theon Greyjoy   Ironborn Male    1022 In 278 AC or 279 AC, at Pyke TRUE 
+#&gt;  2 Tyrion Lannist… &quot;&quot;       Male    1052 In 273 AC, at Casterly Rock  TRUE 
+#&gt;  3 Victarion Grey… Ironborn Male    1074 In 268 AC or before, at Pyke TRUE 
+#&gt;  4 Will            &quot;&quot;       Male    1109 &quot;&quot;                           FALSE
+#&gt;  5 Areo Hotah      Norvoshi Male    1166 In 257 AC or before, at Nor… TRUE 
+#&gt;  6 Chett           &quot;&quot;       Male    1267 At Hag&#39;s Mire                FALSE
+#&gt;  7 Cressen         &quot;&quot;       Male    1295 In 219 AC or 220 AC          FALSE
+#&gt;  8 Arianne Martell Dornish  Female   130 In 276 AC, at Sunspear       TRUE 
+#&gt;  9 Daenerys Targa… Valyrian Female  1303 In 284 AC, at Dragonstone    TRUE 
+#&gt; 10 Davos Seaworth  Westeros Male    1319 In 260 AC or before, at Kin… TRUE 
+#&gt; # … with 20 more rows</code></pre>
 <p><em>Syntax notes: The dot <code>.</code> above is the placeholder for the primary input: <code>got_chars</code> in this case. The curly braces <code>{}</code> surrounding the <code>tibble()</code> call prevent <code>got_chars</code> from being passed in as the first argument of <code>tibble()</code>.</em></p>
 <div id="exercises-3" class="section level4">
 <h4>Exercises</h4>
 <ol style="list-style-type: decimal">
-<li>Use <code>map_df()</code> to create the same data frame as above, but indexing with a vector of positive integers instead of names.</li>
+<li>Use <code>map_dfr()</code> to create the same data frame as above, but indexing with a vector of positive integers instead of names.</li>
 </ol>
 </div>
 </div>
 </div>
 
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="by-nc.png" height="400" width="65"/></a></p>
+<i class="fab fa-creative-commons fa-2x"></i><i class="fab fa-creative-commons-by fa-2x"></i><i class="fab fa-creative-commons-sa fa-2x"></i>
 
 
 </div>
@@ -548,6 +626,49 @@ $(document).ready(function () {
 });
 
 
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_').toLowerCase();
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
 </script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->

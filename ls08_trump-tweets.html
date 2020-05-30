@@ -7,6 +7,7 @@
 <meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
 
@@ -20,8 +21,8 @@
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<link href="site_libs/highlightjs-1.1/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-1.1/highlight.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -30,10 +31,12 @@
   }
 </style>
 <script type="text/javascript">
-if (window.hljs && document.readyState && document.readyState === "complete") {
-   window.setTimeout(function() {
-      hljs.initHighlighting();
-   }, 0);
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
 }
 </script>
 
@@ -67,9 +70,7 @@ h6 {
 </style>
 
 
-</head>
 
-<body>
 
 <style type = "text/css">
 .main-container {
@@ -83,13 +84,18 @@ code {
 }
 img {
   max-width:100%;
-  height: auto;
 }
 .tabbed-pane {
   padding-top: 12px;
 }
+.html-widget {
+  margin-bottom: 20px;
+}
 button.code-folding-btn:focus {
   outline: none;
+}
+summary {
+  display: list-item;
 }
 </style>
 
@@ -105,7 +111,6 @@ body {
   padding-top: 65px;
   margin-top: -65px;
 }
-
 .section h2 {
   padding-top: 65px;
   margin-top: -65px;
@@ -125,6 +130,43 @@ body {
 .section h6 {
   padding-top: 65px;
   margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
 }
 </style>
 
@@ -146,19 +188,73 @@ $(document).ready(function () {
 });
 </script>
 
-
-<div class="container-fluid main-container">
-
 <!-- tabsets -->
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
-</script>
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
 
 <!-- code folding -->
 
 
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
 
 
 
@@ -237,7 +333,7 @@ tweets %&gt;% strtrim(70)
 #&gt; [5] &quot;Bernie Sanders started off strong, but with the selection of Kaine for&quot;
 #&gt; [6] &quot;Crooked Hillary Clinton is unfit to serve as President of the U.S. Her&quot;
 #&gt; [7] &quot;The Cruz-Kasich pact is under great strain. This joke of a deal is fal&quot;</code></pre>
-<p>FYI I preselected tweets with 0, 1, 2, and 3 occurences of Trump Android words.</p>
+<p>FYI I preselected tweets with 0, 1, 2, and 3 occurrences of Trump Android words.</p>
 </div>
 <div id="are-you-ready-for-gregexpr" class="section level3">
 <h3>Are you ready for <code>gregexpr()</code>?</h3>
@@ -246,31 +342,40 @@ tweets %&gt;% strtrim(70)
 <pre class="r"><code>matches &lt;- gregexpr(regex, tweets)
 str(matches)
 #&gt; List of 7
-#&gt;  $ : atomic [1:1] -1
+#&gt;  $ : int -1
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int -1
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
-#&gt;  $ : atomic [1:1] -1
+#&gt;  $ : int -1
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int -1
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
-#&gt;  $ : atomic [1:1] 20
+#&gt;  $ : int 20
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int 5
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
-#&gt;  $ : atomic [1:1] 134
+#&gt;  $ : int 134
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int 4
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
-#&gt;  $ : atomic [1:2] 28 95
+#&gt;  $ : int [1:2] 28 95
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int [1:2] 6 4
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
-#&gt;  $ : atomic [1:2] 87 114
+#&gt;  $ : int [1:2] 87 114
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int [1:2] 4 6
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
-#&gt;  $ : atomic [1:3] 50 112 123
+#&gt;  $ : int [1:3] 50 112 123
 #&gt;   ..- attr(*, &quot;match.length&quot;)= int [1:3] 4 4 4
+#&gt;   ..- attr(*, &quot;index.type&quot;)= chr &quot;chars&quot;
 #&gt;   ..- attr(*, &quot;useBytes&quot;)= logi TRUE
 matches[[7]]
 #&gt; [1]  50 112 123
 #&gt; attr(,&quot;match.length&quot;)
 #&gt; [1] 4 4 4
+#&gt; attr(,&quot;index.type&quot;)
+#&gt; [1] &quot;chars&quot;
 #&gt; attr(,&quot;useBytes&quot;)
 #&gt; [1] TRUE</code></pre>
 <p>What is <code>matches</code>?!?</p>
@@ -305,10 +410,7 @@ But we don’t have anything to use for <code>last</code> yet.<br />
 This is going to be Job #1.<br />
 Job #2 is to insert <code>substring()</code> and <code>tweets</code> + <code>matches</code> + result of Job #1 into the <code>purrr::map()</code> machinery.</p>
 <p>Here’s where we are heading:</p>
-<div class="figure">
-<img src="purrr-slides-trump-tweets.png" />
-
-</div>
+<p><img src="purrr-slides-trump-tweets.png" /></p>
 </div>
 <div id="get-you-know-your-awkward-list" class="section level3">
 <h3>Get you know your Awkward List</h3>
@@ -329,7 +431,7 @@ map_int(matches, length)              # purrr way
 <li>Get the attribute named <code>match.length</code>. Hint: <code>attr()</code>.</li>
 <li>Drop that approach into <code>purrr::map()</code> to scale up to the full <code>matches</code> list.</li>
 </ul>
-<p>Here’s how to do for the last element of <code>matches</code>:</p>
+<p>Here’s how to do that for the last element of <code>matches</code>:</p>
 <pre class="r"><code>m &lt;- matches[[7]]
 attr(m, which = &quot;match.length&quot;)
 #&gt; [1] 4 4 4</code></pre>
@@ -756,16 +858,14 @@ pmap(mdf, substring)
 #&gt;         stop(gettextf(&quot;%s and %s must have the same length&quot;, 
 #&gt;             sQuote(&quot;x&quot;), sQuote(&quot;m&quot;)), domain = NA)
 #&gt;     ili &lt;- is.list(m)
+#&gt;     itype &lt;- &quot;chars&quot;
 #&gt;     useBytes &lt;- if (ili) 
-#&gt;         any(unlist(lapply(m, attr, &quot;useBytes&quot;)))
-#&gt;     else any(attr(m, &quot;useBytes&quot;))
+#&gt;         any(unlist(lapply(m, attr, &quot;index.type&quot;)) == &quot;bytes&quot;)
+#&gt;     else any(attr(m, &quot;index.type&quot;) == &quot;bytes&quot;)
 #&gt;     if (useBytes) {
-#&gt;         asc &lt;- iconv(x, &quot;latin1&quot;, &quot;ASCII&quot;)
-#&gt;         ind &lt;- is.na(asc) | (asc != x)
-#&gt;         if (any(ind)) 
-#&gt;             Encoding(x[ind]) &lt;- &quot;bytes&quot;
+#&gt;         itype &lt;- Encoding(x) &lt;- &quot;bytes&quot;
 #&gt;     }
-#&gt;     if (!ili &amp;&amp; identical(invert, FALSE)) {
+#&gt;     if (!ili &amp;&amp; isFALSE(invert)) {
 #&gt;         so &lt;- m[ind &lt;- (!is.na(m) &amp; (m &gt; -1L))]
 #&gt;         eo &lt;- so + attr(m, &quot;match.length&quot;)[ind] - 1L
 #&gt;         return(substring(x[ind], so, eo))
@@ -785,7 +885,7 @@ pmap(mdf, substring)
 #&gt;                     sQuote(&quot;invert = NA&quot;)), domain = NA)
 #&gt;             }
 #&gt;             beg &lt;- c(1L, c(rbind(so, eo + 1L)))
-#&gt;             end &lt;- c(c(rbind(so - 1L, eo)), nchar(u))
+#&gt;             end &lt;- c(c(rbind(so - 1L, eo)), nchar(u, itype))
 #&gt;             substring(u, beg, end)
 #&gt;         }, x, m, if (ili) 
 #&gt;             lapply(m, attr, &quot;match.length&quot;)
@@ -809,7 +909,7 @@ pmap(mdf, substring)
 #&gt;             else {
 #&gt;                 c(1L, so + ml)
 #&gt;             }
-#&gt;             end &lt;- c(so - 1L, nchar(u))
+#&gt;             end &lt;- c(so - 1L, nchar(u, itype))
 #&gt;             substring(u, beg, end)
 #&gt;         }, x, m, if (ili) 
 #&gt;             lapply(m, attr, &quot;match.length&quot;)
@@ -827,11 +927,11 @@ pmap(mdf, substring)
 #&gt;     names(y) &lt;- names(x)
 #&gt;     y
 #&gt; }
-#&gt; &lt;bytecode: 0x7f8d9ad4c720&gt;
+#&gt; &lt;bytecode: 0x7f8977f3a3b8&gt;
 #&gt; &lt;environment: namespace:base&gt;</code></pre>
 </div>
 
-<p><a rel="license" href="http://creativecommons.org/licenses/by-nc/4.0/"><img alt="Creative Commons License" style="border-width:0" src="by-nc.png" height="400" width="65"/></a></p>
+<i class="fab fa-creative-commons fa-2x"></i><i class="fab fa-creative-commons-by fa-2x"></i><i class="fab fa-creative-commons-sa fa-2x"></i>
 
 
 
@@ -849,6 +949,23 @@ $(document).ready(function () {
 
 
 </script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

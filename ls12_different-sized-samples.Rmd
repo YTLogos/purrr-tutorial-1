@@ -34,13 +34,14 @@ We need a *nested data frame*.
 
 ```{r}
 suppressMessages(library(dplyr))
-suppressMessages(library(purrr))
+library(purrr)
 library(tidyr)
 set.seed(4561)
 
 (nested_iris <- iris %>%
     group_by(Species) %>%   # prep for work by Species
     nest() %>%              # --> one row per Species
+    ungroup() %>% 
     mutate(n = c(2, 5, 3))) # add sample sizes
 ```
 
@@ -65,8 +66,8 @@ We are in that uncomfortable intermediate state, with two list-columns: the orig
 
 ```{r}
 sampled_iris %>% 
-  select(Species, samp) %>%
-  unnest()
+  select(-data) %>%
+  unnest(samp)
 ```
 
 Again, from the top, with no exposition:
@@ -75,10 +76,11 @@ Again, from the top, with no exposition:
 iris %>%
   group_by(Species) %>% 
   nest() %>%            
+  ungroup() %>% 
   mutate(n = c(2, 5, 3)) %>% 
   mutate(samp = map2(data, n, sample_n)) %>% 
-  select(Species, samp) %>%
-  unnest()
+  select(-data) %>%
+  unnest(samp)
 ```
 
 A base R solution, with some marginal comments:
@@ -101,4 +103,3 @@ do.call(rbind, sampled_iris)            # :( do.call()
 ```
 
 IMO the base R solution requires much greater facility with R programming and data structures to get it right. It feels more like programming than data analysis.
-
